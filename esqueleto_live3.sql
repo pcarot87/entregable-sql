@@ -212,7 +212,7 @@ SELECT COUNT(id_categoria) AS num_categorias FROM categorias;
 # 10.  Encontrar la categoría con más libros: (tip: calcular la cantidad de libros de cada categoria)
 
 WITH cantidad_libros AS(
-SELECT c.nombre, COUNT(l.id_libro) AS libros_diferentes, COALESCE(SUM(l.stock),0) AS cantidad_libros_stock
+SELECT c.nombre, COUNT(l.id_libro) AS libros_diferentes
 FROM categorias c
 LEFT JOIN libros l
 ON c.id_categoria = l.categoria_id
@@ -220,9 +220,10 @@ GROUP BY c.id_categoria
 )
 
 SELECT * FROM cantidad_libros
-WHERE cantidad_libros_stock = (
-	SELECT MAX(cantidad_libros_stock) FROM cantidad_libros
+WHERE libros_diferentes = (
+	SELECT MAX(libros_diferentes) FROM cantidad_libros
     );
+    
     
 # 11.  Listar las categorías ordenadas alfabéticamente junto con el promedio de precio de los libros en cada una de ellas:
 
@@ -267,9 +268,10 @@ GROUP BY l.titulo
 )
 
 SELECT * FROM prestamos_x_libro
-WHERE num_prestamos = (
+WHERE num_prestamos =
+(
 	SELECT MAX(num_prestamos) FROM prestamos_x_libro
-    );
+);
 ######################################################################################################################################
 
 # EXTRAS:
