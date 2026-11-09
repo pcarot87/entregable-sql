@@ -149,7 +149,7 @@ WHERE precio > (SELECT AVG(precio) FROM libros);
 
 # numero de libros => cantidad total de libros
 
-SELECT c.nombre, COUNT(DISTINCT l.titulo) AS numero_libros, SUM(l.STOCK) AS total_stock
+SELECT c.nombre, COUNT(DISTINCT l.id_libro) AS numero_libros, SUM(l.STOCK) AS total_stock
 FROM categorias c
 INNER JOIN libros l
 ON c.id_categoria = l.categoria_id
@@ -255,7 +255,7 @@ SELECT l.titulo, COUNT(p.id_prestamo) AS num_prestamos
 FROM prestamos p
 RIGHT JOIN libros l
 ON p.libro_id =  l.id_libro
-GROUP BY l.titulo;
+GROUP BY l.id_libro;
 
 # 16.  Encontrar el libro más prestado: (tip: calcular la cantidad de préstamos por cada libro)
 
@@ -264,7 +264,7 @@ SELECT l.titulo, COUNT(p.id_prestamo) AS num_prestamos
 FROM prestamos p
 RIGHT JOIN libros l
 ON p.libro_id =  l.id_libro
-GROUP BY l.titulo
+GROUP BY l.id_libro
 )
 
 SELECT * FROM prestamos_x_libro
